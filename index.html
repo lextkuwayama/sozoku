@@ -110,6 +110,7 @@
         text-decoration: none;
         box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         box-sizing: border-box;
+        transition: background 0.3s;
     }
     .btn-form:hover {
         background-color: #d35400;
@@ -183,7 +184,10 @@
             あなたのご家庭に合わせた<br>詳しい対策レポートを無料でお送りします。
         </p>
 
-        <a href="#" class="btn-form">詳しい計算結果を受け取る（無料）<br><span style="font-size:0.9rem; font-weight:normal;">※Googleフォームへ移動します</span></a>
+        <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form">
+            詳しい計算結果を受け取る（無料）<br>
+            <span style="font-size:0.9rem; font-weight:normal;">※お申込みフォームへ移動します</span>
+        </a>
         
         <p class="small-text">※上記は入力値に基づく概算の可能性であり、実際の税額や資産増減を保証するものではありません。</p>
     </div>
@@ -191,16 +195,13 @@
 
 <script>
 function calculateResult() {
-    // 入力値の取得
     const heirs = parseInt(document.getElementById('heirs').value);
     const realEstate = parseInt(document.getElementById('realEstate').value);
     const cash = parseInt(document.getElementById('cash').value);
     
-    // 総資産と不動産比率の計算
     const totalAssets = realEstate + cash;
     const realEstateRatio = realEstate / totalAssets;
     
-    // ロジック1：危険度判定（兄弟が複数いて、不動産の比率が高い、または現金が少ないと危険）
     let dangerLevel = "低";
     let dangerReason = "現金が十分にあり、分割しやすい状態です。ただし、税金対策による資産増加の余地があります。";
     
@@ -216,20 +217,16 @@ function calculateResult() {
         dangerReason = "相続人がお一人のため分割で揉める心配はありませんが、多額の相続税が発生し、不動産を手放すリスクがあります。";
     }
 
-    // ロジック2：資産増加のポテンシャル（デモ用のざっくり計算：総資産の10〜15%程度を提示）
-    // ※実際の税理士業務の相場感に合わせてここは調整してください
+    // アップサイドの概算（総資産の10〜15%程度）
     const increasePotential = Math.floor(totalAssets * 0.15);
 
-    // 画面への値のセット
     document.getElementById('dangerLevelText').innerText = "争族危険度：" + dangerLevel;
     document.getElementById('dangerReason').innerText = dangerReason;
     document.getElementById('increaseAmount').innerText = increasePotential.toLocaleString();
 
-    // 画面の切り替え
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
     
-    // スムーズに上部へスクロール
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
