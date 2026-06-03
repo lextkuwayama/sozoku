@@ -142,6 +142,7 @@
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         box-sizing: border-box;
         transition: background 0.3s;
+        text-align: center;
     }
     .btn-form:hover {
         background-color: #e0bc4e;
@@ -149,7 +150,7 @@
     .small-text {
         font-size: 0.85rem;
         color: #666;
-        margin-top: 15px;
+        margin-top: 25px;
         text-align: left;
     }
 
@@ -165,6 +166,26 @@
     .powered-by span {
         color: #172758; /* 統一感を出すためのネイビー */
         font-weight: bold;
+    }
+
+    /* アクション呼びかけテキスト用 */
+    .cta-text {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #172758;
+        line-height: 1.4;
+        margin-top: 35px;
+        margin-bottom: 15px;
+    }
+    .cta-highlight {
+        color: #d6ae3c;
+    }
+    .notice-text {
+        font-size: 0.9rem;
+        color: #dc3545;
+        font-weight: bold;
+        margin-top: -5px;
+        margin-bottom: 20px;
     }
 </style>
 </head>
@@ -236,12 +257,17 @@
             </ul>
         </div>
 
-        <p class="gift-text">🎁 今なら「セカンドオピニオン成功事例」PDFを無料プレゼント！</p>
+        <p class="cta-text">
+            あなたの資産を守り、最大化する方法を<br>
+            <span class="cta-highlight">＼知りたい方はこちらから！／</span>
+        </p>
 
         <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form">
-            詳しい結果レポートを受け取る（無料）<br>
-            <span style="font-size:0.9rem; font-weight:normal;"></span>
+            詳細レポートのお申込みはこちらから（無料）
         </a>
+        
+        <p class="gift-text" style="margin-top: 15px;">🎁 今なら「セカンドオピニオン成功事例」PDFを無料プレゼント！</p>
+        <p class="notice-text">※こちらはLINE登録プレゼント①に該当します</p>
         
         <p class="small-text">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
     </div>
