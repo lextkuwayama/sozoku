@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-     <!-- Meta Pixel Code -->
-        <script>
+     <script>
             !function(f, b, e, v, n, t, s) {
                 if (f.fbq)
                     return;
@@ -28,8 +27,7 @@
         <noscript>
             <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2221248565353814&ev=PageView&noscript=1"/>
         </noscript>
-        <!-- End Meta Pixel Code -->
-<meta name="google-site-verification" content="Zbg4CHJen4F7GSIsE32R5uKJtbzuY_nnY_jvKp-ca4M" />
+        <meta name="google-site-verification" content="Zbg4CHJen4F7GSIsE32R5uKJtbzuY_nnY_jvKp-ca4M" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>「争族」危険度＆資産最大化シミュレーション</title>
@@ -182,7 +180,7 @@
         text-align: left;
     }
 
-    /* Powered by のスタイル追加 */
+    /* Powered by のスタイル */
     .powered-by {
         text-align: center;
         font-size: 0.85rem;
@@ -194,6 +192,23 @@
     .powered-by span {
         color: #172758; /* 統一感を出すためのネイビー */
         font-weight: bold;
+    }
+
+    /* 💡 フッターリンク（会社概要・プライバシーポリシー）のスタイルを追加 */
+    .footer-links {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 0.8rem;
+    }
+    .footer-links a {
+        color: #666;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: color 0.2s;
+    }
+    .footer-links a:hover {
+        color: #172758;
+        text-decoration: underline;
     }
 
     /* アクション呼びかけテキスト用 */
@@ -285,16 +300,14 @@
             </ul>
         </div>
 
-        <p class="cta-text">
+        <p class="cta-text" id="ctaLeadText">
             あなたの資産を守り、最大化する方法を<br>
             <span class="cta-highlight">＼知りたい方はこちらから！／</span>
         </p>
 
-        <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form">
+        <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
             詳細レポートのお申込みはこちらから（無料）
         </a>
-        
-        
         
         <p class="small-text">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
     </div>
@@ -302,9 +315,25 @@
     <div class="powered-by">
         Powered by <span>株式会社PROLEXT</span> & <span>LEXT税理士事務所</span>
     </div>
+
+    <div class="footer-links">
+        <a href="https://prolext.jp/company" target="_blank" rel="noopener noreferrer">会社概要</a>
+        <span>|</span>
+        <a href="https://prolext.jp/privacypolicy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+    </div>
 </div>
 
 <script>
+// ==========================================
+// 【自前ABテスト処理】ユーザーのグループを固定する
+// ==========================================
+let abTestGroup = localStorage.getItem('ab_test_group');
+if (!abTestGroup) {
+    // 50%の確率で 'A'（Googleフォーム）か 'B'（LINE動線）を割り振る
+    abTestGroup = Math.random() < 0.5 ? 'A' : 'B';
+    localStorage.setItem('ab_test_group', abTestGroup);
+}
+
 function getTaxRateAndDeduction(amount) {
     // 国税庁の「相続税の速算表」に基づく税率と控除額（単位：万円）
     if (amount <= 1000) return { rate: 0.10, deduction: 0 };
@@ -392,6 +421,42 @@ function calculateResult() {
     document.getElementById('dangerReason').innerText = dangerReason;
     document.getElementById('increaseAmount').innerText = upsideAmount.toLocaleString();
     document.getElementById('upsideReasonDisplay').innerText = upsideReasonText;
+
+    // ==========================================
+    // 【自前ABテスト処理】判定結果を元にCTAボタンを書き換える
+    // ==========================================
+    const ctaButton = document.getElementById('ctaButton');
+    const ctaLeadText = document.getElementById('ctaLeadText');
+    
+    if (abTestGroup === 'B') {
+        // 【Bパターン：リスク別LINEリンク】
+        // 💡 修正版のリスク低のURL（末尾に4N）を反映しました
+        let lineUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; 
+        if (dangerLevel === "高") lineUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y";
+        if (dangerLevel === "中") lineUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE";
+        
+        ctaButton.href = lineUrl;
+        ctaLeadText.innerHTML = `あなたの資産を守り、最大化する方法を<br><span class="cta-highlight">＼LINEで今すぐお届けします！／</span>`;
+        ctaButton.innerText = "LINEで対策レポートを受け取る（無料）";
+    } else {
+        // 【Aパターン：従来のGoogleフォーム】
+        ctaButton.href = "https://forms.gle/udGYLtKoubmKV4bW8";
+        ctaLeadText.innerHTML = `あなたの資産を守り、最大化する方法を<br><span class="cta-highlight">＼知りたい方はこちらから！／</span>`;
+        ctaButton.innerText = "詳細レポートのお申込みはこちらから（無料）";
+    }
+
+    // ==========================================
+    // 【計測処理】ボタンがクリックされたらMeta Pixelにデータを送る
+    // ==========================================
+    ctaButton.onclick = function() {
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead', {
+                content_name: 'Inheritance_Simulation_LP',
+                content_category: 'Pattern_' + abTestGroup, // 'Pattern_A' または 'Pattern_B'
+                predicted_risk: dangerLevel                 // '高', '中', '低'
+            });
+        }
+    };
 
     // 画面の切り替え
     document.getElementById('step1').style.display = 'none';
