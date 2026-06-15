@@ -118,7 +118,7 @@
         border: 2px solid #d6ae3c;
         padding: 20px;
         border-radius: 8px;
-        margin-bottom: 20px;
+        margin-bottom: 0; /* 下の余白は別の要素でとるため0に */
     }
     .upside-amount {
         font-size: 2.2rem;
@@ -127,6 +127,28 @@
         margin: 10px 0;
     }
     
+    /* 算出根拠と注意書きをまとめる白い枠のスタイル（点線なし） */
+    .reason-box {
+        background: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        margin-top: 15px;
+        text-align: left;
+    }
+    .reason-box p#upsideReasonDisplay {
+        font-size: 0.9rem;
+        color: #555;
+        margin: 0 0 10px 0; /* 注意書きとの間に少しだけ余白 */
+        line-height: 1.5;
+    }
+    .reason-box .small-note {
+        font-size: 0.8rem;
+        color: #888;
+        margin: 0;
+        line-height: 1.4;
+    }
+
     /* 安心感訴求ボックス */
     .trust-box {
         background-color: #f0f4f8;
@@ -146,16 +168,16 @@
         margin-bottom: 5px;
     }
 
-    /* LINE登録ボタン用（緑ベースに固定） */
+    /* LINE登録ボタン用 */
     .btn-form {
         display: block;
         width: 100%;
         padding: 20px;
-        background-color: #06C755; /* LINEグリーン */
-        color: #ffffff; /* 白文字 */
+        background-color: #06C755;
+        color: #ffffff;
         border: none;
         border-radius: 8px;
-        font-size: 1.4rem; /* 画像指示通り文字を大きく */
+        font-size: 1.4rem;
         font-weight: bold;
         text-decoration: none;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -252,23 +274,21 @@
             <p style="font-size:1rem; margin-bottom:5px;">何もしない場合と比べて、手残り資産が</p>
             <div class="upside-amount">最大 約<span id="increaseAmount">--</span>万円</div>
             <p style="font-size:1.1rem; font-weight:bold; margin-bottom:0; color:#172758;">増える（守れる）可能性があります！</p>
-            <p id="upsideReasonDisplay" style="font-size:0.9rem; text-align:left; color:#555; margin-top:15px; background:#fff; padding:10px; border-radius:5px; border:1px solid #eee;"></p>
             
-            <p style="font-size: 0.85rem; color: #666; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; text-align: left; margin-bottom: 0;">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
+            <div class="reason-box">
+                <p id="upsideReasonDisplay"></p>
+                <p class="small-note">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
+            </div>
         </div>
 
-        <div style="margin-top: 55px; margin-bottom: 30px; text-align: center;">
-            
+        <div style="margin-top: 70px; margin-bottom: 30px; text-align: center;">
             <h3 style="font-size: 1.6rem; color: #000; margin-top: 0; margin-bottom: 15px; font-weight: bold;">さらに詳しい診断をご希望の方へ</h3>
-            
             <p style="font-size: 1.15rem; font-weight: bold; line-height: 1.6; color: #000; margin-bottom: 15px;">
                 現在の状況をLINEでお送りいただいた方に<br>
                 <span style="color: #c0392b;">税理士監修のオーダーメイド対策プランを</span><br>
                 無料作成します
             </p>
-            
             <div style="font-size: 1.5rem; color: #000; margin-bottom: 15px;">▼</div>
-
             <a href="#" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
                 LINEで対策レポートを受け取る（無料）
             </a>
@@ -371,19 +391,14 @@ function calculateResult() {
 
     const ctaButton = document.getElementById('ctaButton');
     
-    // ==========================================
-    // 【URL振り分け】リスクに応じてLINEの遷移先を変更します
-    // ==========================================
+    // 【URL振り分け】リスクに応じてLINEの遷移先を変更
     let targetUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; // リスク低のURL
-    
     if (dangerLevel === "高") {
         targetUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y"; // リスク高のURL
     } else if (dangerLevel === "中") {
         targetUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE"; // リスク中のURL
     }
-    
     ctaButton.href = targetUrl;
-    // ==========================================
 
     ctaButton.onclick = function() {
         if (typeof fbq === 'function') {
