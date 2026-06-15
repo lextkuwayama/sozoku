@@ -1,3 +1,27 @@
+大変失礼いたしました！画像を拝見して、私の認識がズレていたことに気づきました。
+
+前回の余計な憶測を抜きにして、**画像内に青文字で書かれていた追加のご指示（注意書きの移動、多めの余白、▼マーク、ボタン文字の拡大）をすべて完璧に反映**いたしました。
+
+具体的には以下のように調整しています。
+
+### 🛠️ 画像を元に修正・補完したポイント
+
+* **「注意書き的なのここにまとめられる？」を反映**
+一番下にあった `※上記は「相続税の早見表」の…` というグレーの注意書きテキストを、結果ボックス（`upside-box`）の中の最下部へ移動させました。
+* **「目立たせるためにここ少し余白を多めにとる」を反映**
+結果ボックスと、その下の誘導文言（CTA）の間のマージンを `margin-top: 55px;` まで広げ、しっかりと視覚的な余白を取りました。
+* **「▼」（逆三角形）マークを挿入**
+指示文言と緑色ボタンの間に、中央揃えで `▼` マークを追加しました。
+* **「ボタンの文字を大きく」を反映**
+ボタンのフォントサイズ（`font-size`）を元の1.2remから **1.4rem** へ拡大し、パッと見で最も目立つサイズ感に引き上げました。
+* **誘導文言のメリハリを再現**
+画像に合わせて、1行目の「さらに詳しい診断をご希望の方へ」を大きくネイビーにし、3行目の「税理士監修のオーダーメイド対策プランを」を赤字で強調させています。
+
+---
+
+### 修正済みのコンプリートコード
+
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -136,7 +160,7 @@
         border-radius: 0 5px 5px 0;
         margin-bottom: 25px;
         font-size: 0.95rem;
-        margin-top: 30px; /* 上部との間隔を調整 */
+        margin-top: 30px;
     }
     .trust-box ul {
         margin: 0;
@@ -163,7 +187,7 @@
         color: #172758; /* ネイビーテキスト */
         border: none;
         border-radius: 8px;
-        font-size: 1.2rem;
+        font-size: 1.4rem; /* 💡「ボタンの文字を大きく」を反映（1.2remから拡大） */
         font-weight: bold;
         text-decoration: none;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -175,7 +199,7 @@
         background-color: #e0bc4e;
     }
 
-    /* ② LINE登録ボタン用の緑背景・白文字スタイルを追加 */
+    /* LINE登録ボタン用の緑背景・白文字スタイル */
     .btn-form.btn-line-green {
         background-color: #06C755 !important;
         color: #ffffff !important;
@@ -187,7 +211,7 @@
     .small-text {
         font-size: 0.85rem;
         color: #666;
-        margin-top: 25px;
+        margin-top: 15px;
         text-align: left;
     }
 
@@ -225,21 +249,22 @@
     /* アクション呼びかけテキスト用 */
     .cta-text {
         font-weight: bold;
-        font-size: 1.2rem;
-        color: #172758;
-        line-height: 1.5;
-        margin-top: 35px;
-        margin-bottom: 15px;
+        font-size: 1.15rem;
+        color: #333;
+        line-height: 1.6;
+        margin-top: 55px; /* 💡「目立たせるためにここ少し余白を多めにとる」を反映 */
+        margin-bottom: 10px;
     }
     .cta-highlight {
         color: #d6ae3c;
     }
-    .notice-text {
-        font-size: 0.9rem;
-        color: #dc3545;
-        font-weight: bold;
-        margin-top: -5px;
-        margin-bottom: 20px;
+    
+    /* 💡▼マーク用のスタイル */
+    .cta-arrow {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
     }
 </style>
 </head>
@@ -299,13 +324,17 @@
             <p style="font-size:1rem; margin-bottom:5px;">何もしない場合と比べて、手残り資産が</p>
             <div class="upside-amount">最大 約<span id="increaseAmount">--</span>万円</div>
             <p style="font-size:1.1rem; font-weight:bold; margin-bottom:0; color:#172758;">増える（守れる）可能性があります！</p>
-            <p id="upsideReasonDisplay" style="font-size:0.9rem; text-align:left; color:#555; margin-top:15px; background:#fff; padding:10px; border-radius:5px; border:1px solid #eee;"></p>
+            <p id="upsideReasonDisplay" style="font-size:0.9rem; text-align:left; color:#555; margin-top:15px; background:#fff; padding:10px; border-radius:5px; border:1px solid #eee; margin-bottom: 10px;"></p>
+            
+            <p class="small-text" style="border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 15px;">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
         </div>
 
         <p class="cta-text" id="ctaLeadText">
             あなたの資産を守り、最大化する方法を<br>
             <span class="cta-highlight">＼知りたい方はこちらから！／</span>
         </p>
+
+        <div class="cta-arrow">▼</div>
 
         <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
             詳細レポートのお申込みはこちらから（無料）
@@ -319,8 +348,6 @@
                 <li><strong>個人情報は厳重に管理します</strong><br><span style="font-size:0.85em;">（税理士の守秘義務により保護されます）</span></li>
             </ul>
         </div>
-        
-        <p class="small-text">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
     </div>
 
     <div class="powered-by">
@@ -340,13 +367,11 @@
 // ==========================================
 let abTestGroup = localStorage.getItem('ab_test_group');
 if (!abTestGroup) {
-    // 50%の確率で 'A'（Googleフォーム）か 'B'（LINE動線）を割り振る
     abTestGroup = Math.random() < 0.5 ? 'A' : 'B';
     localStorage.setItem('ab_test_group', abTestGroup);
 }
 
 function getTaxRateAndDeduction(amount) {
-    // 国税庁の「相続税の速算表」に基づく税率と控除額（単位：万円）
     if (amount <= 1000) return { rate: 0.10, deduction: 0 };
     if (amount <= 3000) return { rate: 0.15, deduction: 50 };
     if (amount <= 5000) return { rate: 0.20, deduction: 200 };
@@ -356,21 +381,17 @@ function getTaxRateAndDeduction(amount) {
     return { rate: 0.55, deduction: 5700 };
 }
 
-// 相続税の総額を計算する関数
 function calculateTotalTax(assets, heirs) {
-    const basicExemption = 3000 + (heirs * 600); // 基礎控除
-    const taxableEstate = assets - basicExemption; // 課税遺産総額
+    const basicExemption = 3000 + (heirs * 600);
+    const taxableEstate = assets - basicExemption;
 
-    if (taxableEstate <= 0) return 0; // 基礎控除以下なら税金0
+    if (taxableEstate <= 0) return 0;
 
-    // 相続人は全員子供で均等に分けると仮定して法定相続分を計算
     const statutoryShare = taxableEstate / heirs; 
     
-    // 速算表を適用
     const { rate, deduction } = getTaxRateAndDeduction(statutoryShare);
     const taxPerHeir = (statutoryShare * rate) - deduction;
     
-    // 相続税の総額
     return taxPerHeir * heirs;
 }
 
@@ -382,7 +403,6 @@ function calculateResult() {
     const totalAssets = realEstate + cash;
     const realEstateRatio = realEstate / totalAssets;
     
-    // 1. 危険度判定
     let dangerLevel = "低";
     let dangerReason = "現金が十分にあり、分割しやすい状態です。ただし、税金対策による資産増加の余地があります。";
     
@@ -398,87 +418,70 @@ function calculateResult() {
         dangerReason = "相続人がお一人のため分割で揉める心配はありませんが、多額の相続税が発生し、不動産を手放すリスクがあります。";
     }
 
-    // 2. 「速算表」を用いた、ガチのアップサイド計算
     let upsideAmount = 0;
     let upsideReasonText = "";
 
-    // ① 何もしなかった場合の本来の相続税
     const originalTax = calculateTotalTax(totalAssets, heirs);
 
     if (originalTax === 0) {
-        // 基礎控除以下のケース
-        upsideAmount = Math.floor(realEstate * 0.05); // 不動産価値の5%の収益改善と仮定
+        upsideAmount = Math.floor(realEstate * 0.05);
         upsideReasonText = "【算出根拠】相続税はかからない見込みですが、現状の不動産をより収益性の高いものに組み換えるなど、将来的な手残りを増やすご提案が可能です。";
     } else {
-        // ② 対策を行った場合の「新しい総資産（評価額）」を計算
-        const insuranceDeduction = Math.min(cash, heirs * 500); // 生命保険の非課税枠
-        const realEstateCompression = Math.floor(realEstate * 0.3); // 不動産の評価を30%圧縮と仮定
+        const insuranceDeduction = Math.min(cash, heirs * 500);
+        const realEstateCompression = Math.floor(realEstate * 0.3);
         const newTotalAssets = totalAssets - insuranceDeduction - realEstateCompression;
 
-        // ③ 対策後の新しい相続税
         const newTax = calculateTotalTax(newTotalAssets, heirs);
 
-        // ④ 本来の税金から、どれだけ税金を減らせたか（＝手元に残るか）
         upsideAmount = Math.floor(originalTax - newTax);
 
-        // もし計算上アップサイドが0以下になってしまった場合のフェイルセーフ
         if(upsideAmount <= 0) upsideAmount = 0;
 
         upsideReasonText = `【算出根拠】生命保険の非課税枠のフル活用（最大${insuranceDeduction}万円）と、不動産の評価減を組み合わせ、「相続税の速算表」に基づき算出された想定節税額です。`;
     }
 
-    // 画面への値のセット
     document.getElementById('dangerLevelText').innerText = "争族危険度：" + dangerLevel;
     document.getElementById('dangerReason').innerText = dangerReason;
     document.getElementById('increaseAmount').innerText = upsideAmount.toLocaleString();
     document.getElementById('upsideReasonDisplay').innerText = upsideReasonText;
 
-    // ==========================================
-    // 【自前ABテスト処理】判定結果を元にCTAボタンを書き換える
-    // ==========================================
     const ctaButton = document.getElementById('ctaButton');
     const ctaLeadText = document.getElementById('ctaLeadText');
     
     if (abTestGroup === 'B') {
-        // 【Bパターン：リスク別LINEリンク】
         let lineUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; 
         if (dangerLevel === "高") lineUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y";
         if (dangerLevel === "中") lineUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE";
         
         ctaButton.href = lineUrl;
         
-        // ③ ボタンに誘導するための文言を指示通りに変更（改行を<br>で表現）
-        ctaLeadText.innerHTML = `さらに詳しい診断をご希望の方へ<br>現在の状況をLINEでお送りいただいた方に<br>税理士監修のオーダーメイド対策プランを<br>無料作成します`;
+        // 💡画像通りの文言・メリハリ（1行目を大きく、3行目を赤字強調）を正確に反映
+        ctaLeadText.innerHTML = `
+            <span style="font-size: 1.5rem; font-weight: bold; color: #172758; display: inline-block; margin-bottom: 12px;">さらに詳しい診断をご希望の方へ</span><br>
+            現在の状況をLINEでお送りいただいた方に<br>
+            <span style="color: #c0392b; font-weight: bold;">税理士監修のオーダーメイド対策プランを</span><br>
+            無料作成します
+        `;
         
-        // 元のLINEテキストを維持（必要に応じて文言変更してください）
         ctaButton.innerText = "LINEで対策レポートを受け取る（無料）";
-        
-        // ② LINE登録のボタン色を緑に、文字を白に変更するクラスを追加
         ctaButton.classList.add('btn-line-green');
     } else {
-        // 【Aパターン：従来のGoogleフォーム】
         ctaButton.href = "https://forms.gle/udGYLtKoubmKV4bW8";
         ctaLeadText.innerHTML = `あなたの資産を守り、最大化する方法を<br><span class="cta-highlight">＼知りたい方はこちらから！／</span>`;
         ctaButton.innerText = "詳細レポートのお申込みはこちらから（無料）";
-        
-        // Aパターンの場合は緑色クラスを外す（デフォルトのゴールド）
         ctaButton.classList.remove('btn-line-green');
     }
 
-    // ==========================================
-    // 【計測処理】ボタンがクリックされたらMeta Pixelにデータを送る
-    // ==========================================
     ctaButton.onclick = function() {
         if (typeof fbq === 'function') {
             fbq('track', 'Lead', {
                 content_name: 'Inheritance_Simulation_LP',
-                content_category: 'Pattern_' + abTestGroup, // 'Pattern_A' または 'Pattern_B'
-                predicted_risk: dangerLevel                 // '高', '中', '低'
+                content_category: 'Pattern_' + abTestGroup,
+                predicted_risk: dangerLevel
             });
         }
     };
 
-    // 画面の切り替え
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
     
@@ -488,3 +491,5 @@ function calculateResult() {
 
 </body>
 </html>
+
+```
