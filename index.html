@@ -136,6 +136,7 @@
         border-radius: 0 5px 5px 0;
         margin-bottom: 25px;
         font-size: 0.95rem;
+        margin-top: 30px; /* 上部との間隔を調整 */
     }
     .trust-box ul {
         margin: 0;
@@ -158,8 +159,8 @@
         display: block;
         width: 100%;
         padding: 20px;
-        background-color: #d6ae3c; /* ゴールド */
-        color: #172758; /* ネイビーテキストで高級感 */
+        background-color: #d6ae3c; /* デフォルト：ゴールド */
+        color: #172758; /* ネイビーテキスト */
         border: none;
         border-radius: 8px;
         font-size: 1.2rem;
@@ -173,6 +174,16 @@
     .btn-form:hover {
         background-color: #e0bc4e;
     }
+
+    /* ② LINE登録ボタン用の緑背景・白文字スタイルを追加 */
+    .btn-form.btn-line-green {
+        background-color: #06C755 !important;
+        color: #ffffff !important;
+    }
+    .btn-form.btn-line-green:hover {
+        background-color: #05b34c !important;
+    }
+
     .small-text {
         font-size: 0.85rem;
         color: #666;
@@ -194,7 +205,7 @@
         font-weight: bold;
     }
 
-    /* 💡 フッターリンク（会社概要・プライバシーポリシー）のスタイルを追加 */
+    /* フッターリンクのスタイル */
     .footer-links {
         text-align: center;
         margin-top: 15px;
@@ -216,7 +227,7 @@
         font-weight: bold;
         font-size: 1.2rem;
         color: #172758;
-        line-height: 1.4;
+        line-height: 1.5;
         margin-top: 35px;
         margin-bottom: 15px;
     }
@@ -291,15 +302,6 @@
             <p id="upsideReasonDisplay" style="font-size:0.9rem; text-align:left; color:#555; margin-top:15px; background:#fff; padding:10px; border-radius:5px; border:1px solid #eee;"></p>
         </div>
 
-        <div class="trust-box">
-            <p style="margin-top:0; font-weight:bold; color:#172758;">【ご安心ください】</p>
-            <ul>
-                <li><strong>親御様に知られることはありません</strong><br><span style="font-size:0.85em;">（ご相談者の同意なく連絡することは一切ございません）</span></li>
-                <li><strong>しつこい営業電話はいたしません</strong><br><span style="font-size:0.85em;">（ご希望の連絡方法でのみご案内します）</span></li>
-                <li><strong>個人情報は厳重に管理します</strong><br><span style="font-size:0.85em;">（税理士の守秘義務により保護されます）</span></li>
-            </ul>
-        </div>
-
         <p class="cta-text" id="ctaLeadText">
             あなたの資産を守り、最大化する方法を<br>
             <span class="cta-highlight">＼知りたい方はこちらから！／</span>
@@ -308,6 +310,15 @@
         <a href="https://forms.gle/udGYLtKoubmKV4bW8" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
             詳細レポートのお申込みはこちらから（無料）
         </a>
+
+        <div class="trust-box">
+            <p style="margin-top:0; font-weight:bold; color:#172758;">【ご安心ください】</p>
+            <ul>
+                <li><strong>親御様に知られることはありません</strong><br><span style="font-size:0.85em;">（ご相談者の同意なく連絡することは一切ございません）</span></li>
+                <li><strong>しつこい営業電話はいたしません</strong><br><span style="font-size:0.85em;">（ご希望の連絡方法でのみご案内します）</span></li>
+                <li><strong>個人情報は厳重に管理します</strong><br><span style="font-size:0.85em;">（税理士の守秘義務により保護されます）</span></li>
+            </ul>
+        </div>
         
         <p class="small-text">※上記は「相続税の早見表」の基礎控除と、生命保険の非課税枠、不動産評価減の概算ロジックを組み合わせた結果であり、実際の税額や資産増減を保証するものではありません。</p>
     </div>
@@ -352,7 +363,7 @@ function calculateTotalTax(assets, heirs) {
 
     if (taxableEstate <= 0) return 0; // 基礎控除以下なら税金0
 
-    // 今回はペルソナ（地主の子供）に合わせて、「相続人は全員子供で均等に分ける」と仮定して法定相続分を計算
+    // 相続人は全員子供で均等に分けると仮定して法定相続分を計算
     const statutoryShare = taxableEstate / heirs; 
     
     // 速算表を適用
@@ -371,7 +382,7 @@ function calculateResult() {
     const totalAssets = realEstate + cash;
     const realEstateRatio = realEstate / totalAssets;
     
-    // 1. 危険度判定（変更なし）
+    // 1. 危険度判定
     let dangerLevel = "低";
     let dangerReason = "現金が十分にあり、分割しやすい状態です。ただし、税金対策による資産増加の余地があります。";
     
@@ -430,19 +441,28 @@ function calculateResult() {
     
     if (abTestGroup === 'B') {
         // 【Bパターン：リスク別LINEリンク】
-        // 💡 修正版のリスク低のURL（末尾に4N）を反映しました
         let lineUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; 
         if (dangerLevel === "高") lineUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y";
         if (dangerLevel === "中") lineUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE";
         
         ctaButton.href = lineUrl;
-        ctaLeadText.innerHTML = `あなたの資産を守り、最大化する方法を<br><span class="cta-highlight">＼LINEで今すぐお届けします！／</span>`;
+        
+        // ③ ボタンに誘導するための文言を指示通りに変更（改行を<br>で表現）
+        ctaLeadText.innerHTML = `さらに詳しい診断をご希望の方へ<br>現在の状況をLINEでお送りいただいた方に<br>税理士監修のオーダーメイド対策プランを<br>無料作成します`;
+        
+        // 元のLINEテキストを維持（必要に応じて文言変更してください）
         ctaButton.innerText = "LINEで対策レポートを受け取る（無料）";
+        
+        // ② LINE登録のボタン色を緑に、文字を白に変更するクラスを追加
+        ctaButton.classList.add('btn-line-green');
     } else {
         // 【Aパターン：従来のGoogleフォーム】
         ctaButton.href = "https://forms.gle/udGYLtKoubmKV4bW8";
         ctaLeadText.innerHTML = `あなたの資産を守り、最大化する方法を<br><span class="cta-highlight">＼知りたい方はこちらから！／</span>`;
         ctaButton.innerText = "詳細レポートのお申込みはこちらから（無料）";
+        
+        // Aパターンの場合は緑色クラスを外す（デフォルトのゴールド）
+        ctaButton.classList.remove('btn-line-green');
     }
 
     // ==========================================
