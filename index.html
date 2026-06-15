@@ -1,3 +1,4 @@
+1
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -269,7 +270,7 @@
             
             <div style="font-size: 1.5rem; color: #000; margin-bottom: 15px;">▼</div>
 
-            <a href="https://u.prolextol.jp/line/open/ALI7EnIy8Z4N" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn-form" id="ctaButton">
                 LINEで対策レポートを受け取る（無料）
             </a>
         </div>
@@ -296,16 +297,6 @@
 </div>
 
 <script>
-// ==========================================
-// 【計測・ABテスト用処理】
-// デザイン切り替え処理は撤廃し、遷移先のURLの振り分けのみ行います
-// ==========================================
-let abTestGroup = localStorage.getItem('ab_test_group');
-if (!abTestGroup) {
-    abTestGroup = Math.random() < 0.5 ? 'A' : 'B';
-    localStorage.setItem('ab_test_group', abTestGroup);
-}
-
 function getTaxRateAndDeduction(amount) {
     if (amount <= 1000) return { rate: 0.10, deduction: 0 };
     if (amount <= 3000) return { rate: 0.15, deduction: 50 };
@@ -381,23 +372,24 @@ function calculateResult() {
 
     const ctaButton = document.getElementById('ctaButton');
     
-    // 【URL振り分け】デザインは共通にし、遷移先のみグループで変更します
-    if (abTestGroup === 'B') {
-        let lineUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; 
-        if (dangerLevel === "高") lineUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y";
-        if (dangerLevel === "中") lineUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE";
-        ctaButton.href = lineUrl;
-    } else {
-        // Aパターン（Googleフォームへのリンク）
-        // ※全体をLINE訴求に統一しているため、AパターンもLINEのURLにする場合は上記と同じに変更してください
-        ctaButton.href = "https://forms.gle/udGYLtKoubmKV4bW8";
+    // ==========================================
+    // 【URL振り分け】リスクに応じてLINEの遷移先を変更します
+    // ==========================================
+    let targetUrl = "https://u.prolextol.jp/line/open/ALI7EnIy8Z4N"; // リスク低のURL
+    
+    if (dangerLevel === "高") {
+        targetUrl = "https://u.prolextol.jp/line/open/uB4siUjJ6S8y"; // リスク高のURL
+    } else if (dangerLevel === "中") {
+        targetUrl = "https://u.prolextol.jp/line/open/IJjqXhzuQ1wE"; // リスク中のURL
     }
+    
+    ctaButton.href = targetUrl;
+    // ==========================================
 
     ctaButton.onclick = function() {
         if (typeof fbq === 'function') {
             fbq('track', 'Lead', {
                 content_name: 'Inheritance_Simulation_LP',
-                content_category: 'Pattern_' + abTestGroup,
                 predicted_risk: dangerLevel
             });
         }
