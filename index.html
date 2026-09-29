@@ -381,7 +381,7 @@
                 LINEで対策レポートを受け取る（無料）
             </a>
             <button type="button" class="btn-email-toggle" id="emailToggle" aria-expanded="false" aria-controls="emailForm">
-                メールアドレスで受け取る
+                メールアドレスで受け取る（無料）
             </button>
             <form id="emailForm" class="email-form" hidden>
                 <label for="userEmail">レポートの送付先メールアドレス</label>
@@ -564,7 +564,7 @@ document.getElementById('emailForm').addEventListener('submit', async function(e
     submitButton.textContent = '送信中...';
 
     try {
-        const response = await fetch('https://formsubmit.co/ajax/support@prolextol.jp', {
+        const response = await fetch('https://formsubmit.co/ajax/itsupport@prolext.jp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
